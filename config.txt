@@ -1,0 +1,510 @@
+{
+	"format": 2,
+	"timezone": "2",
+	"update": "BETA",
+	"device": {
+		"name": "IotaWatt",
+		"version": 3,
+		"channels": "15",
+		"burden": [
+			0,
+			24,
+			24,
+			24,
+			24,
+			24,
+			24,
+			24,
+			24,
+			24,
+			24,
+			24,
+			24,
+			24,
+			24
+		]
+	},
+	"inputs": [
+		{
+			"channel": 0,
+			"name": "Voltage",
+			"type": "VT",
+			"model": "Ideal 77DE-06-09(EU)",
+			"cal": 19.18
+		},
+		{
+			"channel": 1,
+			"name": "Maison_Import",
+			"type": "CT",
+			"model": "SCT013-000",
+			"phase": 2.3,
+			"turns": 2000,
+			"cal": 83.33333333333333,
+			"signed": true,
+			"reverse": true
+		},
+		{
+			"channel": 2,
+			"name": "Plaques",
+			"type": "CT",
+			"model": "SCT013-000",
+			"phase": 2.3,
+			"turns": 2000,
+			"cal": 83.33333333333333
+		},
+		{
+			"channel": 3,
+			"name": "Chauffe_eau",
+			"type": "CT",
+			"model": "SCT013-000",
+			"phase": 2.3,
+			"turns": 2000,
+			"cal": 83.33333333333333
+		},
+		{
+			"channel": 4,
+			"name": "Frigo",
+			"type": "CT",
+			"model": "SCT013-000",
+			"phase": 2.3,
+			"turns": 2000,
+			"cal": 83.33333333333333,
+			"reverse": true
+		},
+		{
+			"channel": 5,
+			"name": "Lave_Vaisselle",
+			"type": "CT",
+			"model": "SCT013-000",
+			"phase": 2.3,
+			"turns": 2000,
+			"cal": 83.33333333333333
+		},
+		{
+			"channel": 6,
+			"name": "Ligne_3",
+			"type": "CT",
+			"model": "SCT013-000",
+			"phase": 2.3,
+			"turns": 2000,
+			"cal": 83.33333333333333,
+			"reverse": true
+		},
+		{
+			"channel": 7,
+			"name": "PAC_BAS",
+			"type": "CT",
+			"model": "SCT013-000",
+			"phase": 2.3,
+			"turns": 2000,
+			"cal": 83.33333333333333,
+			"reverse": true
+		},
+		{
+			"channel": 8,
+			"name": "CE_Inject",
+			"type": "CT",
+			"model": "SCT013-000",
+			"phase": 2.3,
+			"turns": 2000,
+			"cal": 83.33333333333333
+		},
+		{
+			"channel": 9,
+			"name": "Ligne_2",
+			"type": "CT",
+			"model": "SCT013-000",
+			"phase": 2.3,
+			"turns": 2000,
+			"cal": 83.33333333333333,
+			"reverse": true
+		},
+		{
+			"channel": 10,
+			"name": "Ligne_1",
+			"type": "CT",
+			"model": "SCT013-000",
+			"phase": 2.3,
+			"turns": 2000,
+			"cal": 83.33333333333333,
+			"reverse": true
+		},
+		{
+			"channel": 11,
+			"name": "PAC_Haut",
+			"type": "CT",
+			"model": "SCT013-000",
+			"phase": 2.3,
+			"turns": 2000,
+			"cal": 83.33333333333333,
+			"reverse": true
+		},
+		{
+			"channel": 12,
+			"name": "Linge",
+			"type": "CT",
+			"model": "SCT013-000",
+			"phase": 2.3,
+			"turns": 2000,
+			"cal": 83.33333333333333
+		},
+		{
+			"channel": 13,
+			"name": "Four",
+			"type": "CT",
+			"model": "SCT013-000",
+			"phase": 2.3,
+			"turns": 2000,
+			"cal": 83.33333333333333
+		},
+		{
+			"channel": 14,
+			"name": "Photovoltaique",
+			"type": "CT",
+			"model": "SCT013-000",
+			"phase": 2.3,
+			"turns": 2000,
+			"cal": 83.33333333333333
+		}
+	],
+	"outputs": [
+		{
+			"name": "Lignes_all",
+			"units": "Watts",
+			"script": "@10+@9+@6+@11+@2+@5+@13"
+		},
+		{
+			"name": "Main_Export",
+			"units": "Watts",
+			"script": "(@1<#0)|"
+		},
+		{
+			"name": "Main_Import",
+			"units": "Watts",
+			"script": "@1>#0"
+		},
+		{
+			"name": "MainsConsumption",
+			"units": "Watts",
+			"script": "@1+@14>#0"
+		},
+		{
+			"name": "MainsSolar",
+			"units": "Watts",
+			"script": "@14>#0"
+		},
+		{
+			"name": "Maison_All_PAPP",
+			"units": "VA",
+			"script": "@1+@14"
+		},
+		{
+			"name": "Maison_Gobal",
+			"units": "Watts",
+			"script": "@1+@14"
+		},
+		{
+			"name": "zero",
+			"units": "Watts",
+			"script": "#0"
+		}
+	],
+	"influxdb": {
+		"type": "influxdb",
+		"revision": 272,
+		"postInterval": 10,
+		"bulksend": 6,
+		"url": "http://192.168.10.10:8086",
+		"database": "iotawatt",
+		"tagset": [],
+		"outputs": [
+			{
+				"name": "C_eau_W",
+				"units": "Watts",
+				"script": "@3"
+			},
+			{
+				"name": "Divert_ECS",
+				"units": "VA",
+				"script": "@8"
+			},
+			{
+				"name": "Four_W",
+				"units": "Watts",
+				"script": "@13"
+			},
+			{
+				"name": "Frigo_W",
+				"units": "Watts",
+				"script": "@4"
+			},
+			{
+				"name": "Lave_Vaisselle_W",
+				"units": "Watts",
+				"script": "@5"
+			},
+			{
+				"name": "Ligne_1_W",
+				"units": "Watts",
+				"script": "@10"
+			},
+			{
+				"name": "Ligne_2_W",
+				"units": "Watts",
+				"script": "@9"
+			},
+			{
+				"name": "Ligne_3_W",
+				"units": "Watts",
+				"script": "@6"
+			},
+			{
+				"name": "Linge_W",
+				"units": "Watts",
+				"script": "@12"
+			},
+			{
+				"name": "Maison_A",
+				"units": "Amps",
+				"script": "@1"
+			},
+			{
+				"name": "Maison_Global",
+				"units": "Watts",
+				"script": "@1+@14"
+			},
+			{
+				"name": "Maison_kWh",
+				"units": "kWh",
+				"script": "@1"
+			},
+			{
+				"name": "Maison_W",
+				"units": "Watts",
+				"script": "@1"
+			},
+			{
+				"name": "PAC_Bas_W",
+				"units": "Watts",
+				"script": "@7"
+			},
+			{
+				"name": "PAC_Haut_W",
+				"units": "Watts",
+				"script": "@11"
+			},
+			{
+				"name": "photovoltaique",
+				"units": "Watts",
+				"script": "@14"
+			},
+			{
+				"name": "Plaques_W",
+				"units": "Watts",
+				"script": "@2"
+			}
+		],
+		"begdate": 1535580000,
+		"stop": true,
+		"user": "iotawatt",
+		"pwd": "WerfOjitagij2"
+	},
+	"pvoutput": {
+		"type": "pvoutput",
+		"revision": 7,
+		"interval": 300,
+		"apikey": "a86e45bf19681d33495710644648bf2b88e19247",
+		"systemid": "63770",
+		"outputs": [
+			{
+				"name": "consumption",
+				"units": "Watts",
+				"script": "@1"
+			},
+			{
+				"name": "generation",
+				"units": "Watts",
+				"script": "@14"
+			}
+		],
+		"begdate": 1541030400,
+		"reload": true,
+		"stop": true
+	},
+	"dstrule": {
+		"adj": 60,
+		"utc": true,
+		"begin": {
+			"month": 3,
+			"weekday": 1,
+			"instance": -1,
+			"time": 60
+		},
+		"end": {
+			"month": 10,
+			"weekday": 1,
+			"instance": -1,
+			"time": 60
+		}
+	},
+	"emoncms": {
+		"type": "emoncms",
+		"revision": 128,
+		"node": "IotaWatt",
+		"postInterval": 10,
+		"bulksend": 1,
+		"url": "http://192.168.10.181/emoncms/",
+		"apikey": "3b503992ead6f32f2e0cc87673cd1f0a",
+		"user": "",
+		"pwd": "",
+		"outputs": [
+			{
+				"name": "1",
+				"units": "Volts",
+				"script": "@0"
+			},
+			{
+				"name": "2",
+				"units": "Watts",
+				"script": "@1"
+			},
+			{
+				"name": "3",
+				"units": "Amps",
+				"script": "@1"
+			},
+			{
+				"name": "4",
+				"units": "PF",
+				"script": "@1"
+			},
+			{
+				"name": "5",
+				"units": "VA",
+				"script": "@12"
+			},
+			{
+				"name": "6",
+				"units": "VA",
+				"script": "@13"
+			},
+			{
+				"name": "7",
+				"units": "VA",
+				"script": "@4"
+			},
+			{
+				"name": "8",
+				"units": "VA",
+				"script": "@5"
+			},
+			{
+				"name": "9",
+				"units": "VA",
+				"script": "@2"
+			},
+			{
+				"name": "10",
+				"units": "VA",
+				"script": "@3"
+			},
+			{
+				"name": "11",
+				"units": "VA",
+				"script": "@11"
+			},
+			{
+				"name": "12",
+				"units": "VA",
+				"script": "@10"
+			},
+			{
+				"name": "13",
+				"units": "VA",
+				"script": "@9"
+			},
+			{
+				"name": "14",
+				"units": "VA",
+				"script": "@6"
+			},
+			{
+				"name": "15",
+				"units": "Amps",
+				"script": "@3"
+			},
+			{
+				"name": "16",
+				"units": "Amps",
+				"script": "@12"
+			},
+			{
+				"name": "17",
+				"units": "Amps",
+				"script": "@5"
+			},
+			{
+				"name": "18",
+				"units": "Amps",
+				"script": "@4"
+			},
+			{
+				"name": "19",
+				"units": "Amps",
+				"script": "@13"
+			},
+			{
+				"name": "20",
+				"units": "Amps",
+				"script": "@2"
+			},
+			{
+				"name": "21",
+				"units": "VA",
+				"script": "@7"
+			},
+			{
+				"name": "22",
+				"units": "VA",
+				"script": "@6-@3"
+			},
+			{
+				"name": "23",
+				"units": "Watts",
+				"script": "@14"
+			},
+			{
+				"name": "24",
+				"units": "Watts",
+				"script": "@1+@14"
+			},
+			{
+				"name": "25",
+				"units": "Watts",
+				"script": "@10+@9+@6+@11+@2+@5+@13"
+			},
+			{
+				"name": "26",
+				"units": "Watts",
+				"script": "@8"
+			},
+			{
+				"name": "27",
+				"units": "VA",
+				"script": "@1+@14"
+			},
+			{
+				"name": "28",
+				"units": "Watts",
+				"script": "@6"
+			},
+			{
+				"name": "29",
+				"units": "Amps",
+				"script": "@7"
+			}
+		],
+		"userid": "1",
+		"begdate": 1538431200
+	}
+}
